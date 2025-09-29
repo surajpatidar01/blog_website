@@ -1,8 +1,14 @@
 from django.shortcuts import render
-from django.shortcuts import render
-
-
-# Create your views here.
+from blogs.models import Category, Blogs
 
 def home(request):
-    return render(request,'blog_main/home.html')
+    categories = Category.objects.all()
+    featured_post = Blogs.objects.filter(is_featured=True)
+    posts = Blogs.objects.filter(is_featured=False, status='published')
+
+    context = {
+        'categories': categories,
+        'featured_post': featured_post,
+        'posts': posts,
+    }
+    return render(request, 'blog_main/home.html', context)
