@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.text import slugify  # ✅ import slugify
+from django.utils.text import slugify
 
-# Category model
+# catagey model
 class Category(models.Model):
     category_name = models.CharField(max_length=200, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -14,7 +14,7 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
-# Status choices
+# Status choice
 STATUS_CHOICE = (
     ('draft', 'Draft'),
     ('published', 'Published'),
@@ -40,7 +40,7 @@ class Blogs(models.Model):
     def __str__(self):
         return self.title
 
-    # ✅ Auto-generate slug from title
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

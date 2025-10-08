@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Blogs, Category
+from django.db.models import Q
 
 
 def posts_by_category(request,category_id):
@@ -17,5 +18,47 @@ def posts_by_category(request,category_id):
 
 #blogs
 
-def blogs(request,slug):
-    return  render(request,'blogs.html')
+# def blogs(request,slug):
+#     single_post = get_object_or_404(Blogs,slug=slug,status='published')
+#     context= {
+#         'single_post':single_post,
+#     }
+#     return  render(request,'blogs.html',context)
+
+
+
+
+def blogs(request, slug):
+    single_post = get_object_or_404(Blogs, slug=slug, status='published')
+
+    context = {
+        'single_post': single_post,
+
+    }
+
+    return render(request, 'blogs.html', context)
+
+
+#Search Functionality
+# def search(request):
+#     keyword = request.GET.get('keyword')
+#     blog = Blogs.objects.filter(title__icontains=keyword)
+#     content = {
+#         'blog': blog,      # same variable name as above
+#         'keyword': keyword # comma added
+#     }
+#     return render(request, 'search.html', content)
+
+
+
+def search(request):
+    query = request.GET.get('q')  # 'q' likhna hai, 'keyword' nahi
+    if query:  # check karo query empty na ho
+        blog = Blogs.objects.filter(Q(title__icontains=query) | Q(short_description__icontains=query) | Q(body__icontains=query))
+    else:
+        blog = Blogs.objects.none()  # agar query nahi hai to empty result
+
+    return render(request, 'search.html', {'blog': blog})
+
+
+
