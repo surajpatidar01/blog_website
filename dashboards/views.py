@@ -32,3 +32,11 @@ def add_categories(request):
         'form': form
     }
     return render(request, 'add_categories.html', context)
+
+
+#--delete category
+def delete_categories(request,pk):
+    category = Category.objects.get(pk=pk)
+    category.delete()
+
+    return redirect('categories')
