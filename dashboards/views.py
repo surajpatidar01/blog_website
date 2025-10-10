@@ -11,7 +11,9 @@ def dashboard(request):
     context={
        'category_counts':category_counts,
        'blogs_counts':blogs_counts
-
-
 }
     return render(request,'dashboard.html',context)
+
+#Category view-------
+def categories(request):
+    return render(request,'categories.html')
