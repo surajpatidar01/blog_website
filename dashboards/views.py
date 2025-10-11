@@ -40,3 +40,14 @@ def delete_categories(request,pk):
     category.delete()
 
     return redirect('categories')
+
+
+
+
+#posts
+def posts(request):
+    posts = Blogs.objects.all()
+    context = {
+        'posts':posts
+    }
+    return render(request,'posts.html',context)

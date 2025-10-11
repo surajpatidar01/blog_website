@@ -1,0 +1,50 @@
+{%  extends "blog_main/base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <!-- Left Sidebar -->
+  {% include 'leftsidebar.html' %}
+
+  <!-- Right Content Area -->
+  <div class="col-md-9 d-flex flex-column align-items-center" style="margin-top: 20px;">
+
+
+
+        <a href="" class="btn btn-warning text-dark  ">Add New Post</a>
+    <table class="table table-bordered text-center" cellpadding="3" cellspacing="0">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Category At</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th>Featured</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.category }}</td>
+          <td>{{ post.author }}</td>
+          <td>{{ post.status }}</td>
+          <td>{{ post.is_featured }}</td>
+
+          <td>
+            <a href="#"><i class="fa fa-edit text-success"></i></a>
+            &nbsp;&nbsp;
+            <a href=" "><i class="fa fa-trash text-danger"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+{% endblock %}
