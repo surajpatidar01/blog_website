@@ -16,4 +16,5 @@ urlpatterns = [
 
 #path for user
     path('users/',views.users,name='users'),
+    path('users/add',views.add_users,name='add_users'),
 ]
