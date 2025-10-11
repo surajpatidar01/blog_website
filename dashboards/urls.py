@@ -14,4 +14,6 @@ urlpatterns = [
     path('posts/delete/<int:pk>/',views.delete_posts,name='delete_posts'),
 
 
+#path for user
+    path('users/',views.users,name='users'),
 ]

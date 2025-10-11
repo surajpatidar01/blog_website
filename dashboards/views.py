@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . forms import CategoryForm,BlogPostForm
 from django.template.defaultfilters import  slugify
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -101,3 +102,12 @@ def delete_posts(request,pk):
     post.delete()
 
     return redirect('posts')
+
+#---------function for users
+def users(request):
+    users = User.objects.all()
+    context = {
+        'users':users
+    }
+
+    return render(request,'users.html',context)
