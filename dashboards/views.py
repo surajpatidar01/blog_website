@@ -3,6 +3,7 @@ from blogs.models import Category,Blogs
 from django.contrib.auth.decorators import login_required
 from . forms import CategoryForm,BlogPostForm
 from django.template.defaultfilters import  slugify
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -76,3 +77,27 @@ def add_posts(request):
     }
 
     return render(request,'add_posts.html',context)
+
+#--edit posts
+def edit_posts(request, pk):
+    post = Blogs.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', pk=post.pk)  # Edit hone ke baad kahin redirect karo
+    else:
+        form = BlogPostForm(instance=post)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'edit_posts.html', context)
+
+#delete post functionality
+def delete_posts(request,pk):
+    post = get_object_or_404(Blogs,pk=pk)
+    post.delete()
+
+    return redirect('posts')
